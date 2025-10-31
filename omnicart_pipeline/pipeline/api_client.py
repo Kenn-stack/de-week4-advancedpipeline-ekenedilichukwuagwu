@@ -11,10 +11,16 @@ class APIClient():
 
     def get_products(self):
         response =  requests.get(self.base_url + '/products')
-        all_products = response.json()
-        print(len(all_products))
-        for i in range(0, len(all_products), self.limit):
-            yield all_products[i:i+self.limit]
+        products = response.json()
+        
+        for i in range(0, len(products), self.limit):
+            yield products[i:i+self.limit]
+            
+    def get_users(self):
+        response =  requests.get(self.base_url + '/users')
+        users = response.json()
+        
+        return users
             
         
         
