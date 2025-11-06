@@ -11,11 +11,11 @@ class APIClient():
         try:
             response =  requests.get(base_url + '/products', timeout=5)
             response.raise_for_status()
-        except request.exceptions.Timeout:
+        except requests.exceptions.Timeout:
             raise TimeoutError("The request time out while trying to reach the server")
-        except request.exceptions.ConnectionError:
+        except requests.exceptions.ConnectionError:
             raise ConnectionError("Failed to establish connection to the server")
-        except request.exceptions.HTTPError as e:
+        except requests.exceptions.HTTPError as e:
             raise RuntimeError(f"HTTP error occurred: {e.response.status_code}")
 
         products = response.json()
@@ -27,16 +27,17 @@ class APIClient():
         try:
             response =  requests.get(base_url + '/users')
             response.raise_for_status()
-        except request.exceptions.Timeout:
+        except requests.exceptions.Timeout:
             raise TimeoutError("The request time out while trying to reach the server")
-        except request.exceptions.ConnectionError:
+        except requests.exceptions.ConnectionError:
             raise ConnectionError("Failed to establish connection to the server")
-        except request.exceptions.HTTPError as e:
+        except requests.exceptions.HTTPError as e:
             raise RuntimeError(f"HTTP error occurred: {e.response.status_code}")
 
         users = response.json()
         return users
 
-# print(next(APIClient().get_products()))            
+
+print(next(APIClient().get_products('https://fakestoreapi.com', 5)))            
         
         
